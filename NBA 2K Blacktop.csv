@@ -35,7 +35,4 @@ GameID,TeamID,UserID,PF,PA,PlayerID,TeammateID,OppPlayer1,OppPlayer2
 10,Ringers,Brant,22,20,11,0,15,4
 10,Ballerz,Joe,20,22,4,15,0,11
 10,Ballerz,Jeremy,20,22,15,4,11,0
-11,Ringers,Brant,21,17,55,1,50,4
-11,Ringers,Nick,21,17,1,55,50,4
-11,Ballerz,Jeremy,17,21,50,4,55,1
-11,Ballerz,Joe,17,21,4,50,55,1
+
