@@ -17,13 +17,13 @@ def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
         UserID = player
         PF = RingersScore
         PA = BallerzScore
-        PlayerID = RingersDict[player]
+        PlayerID = RingersDict[player][1]
         for teammate in RingersDict:
             if teammate != player:
-                TeammateID = RingersDict[teammate]
+                TeammateID = RingersDict[teammate][1]
         oppList = []
         for opponent in BallerzDict:
-            oppList.append(BallerzDict[opponent])
+            oppList.append(BallerzDict[opponent][1])
         OppPlayer1 = oppList[0]
         OppPlayer2 = oppList[1]
         addList = [GameID, 'Ringers', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2]
@@ -33,23 +33,19 @@ def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
         UserID = player
         PF = BallerzScore
         PA = RingersScore
-        PlayerID = BallerzDict[player]
+        PlayerID = BallerzDict[player][1]
         for teammate in BallerzDict:
             if teammate != player:
-                TeammateID = BallerzDict[teammate]
+                TeammateID = BallerzDict[teammate][1]
         oppList = []
         for opponent in RingersDict:
-            oppList.append(RingersDict[opponent])
+            oppList.append(RingersDict[opponent][1])
         OppPlayer1 = oppList[0]
         OppPlayer2 = oppList[1]
         addList = [GameID, 'Ballerz', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2]
         append_list_as_row(csv_name, addList)
     
 
-RDict = {"Brant": 55, "Nick": 1}
-BDict = {"Jeremy": 50, "Joe": 4}
 
-
-update_csv("./NBA 2K Blacktop.csv",RDict,BDict,21,17)
 
 
