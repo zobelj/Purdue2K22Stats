@@ -1,4 +1,5 @@
 import random
+import numpy as np
 
 users = ['Joe', 'Nick', 'Brant', 'Jeremy']
 purdue_players = ['Zach Edey', 'Jaden Ivey', 'Trevion Williams', 'Eric Hunter Jr.', 'Brandon Newman', 'Sasha Stefanovic', 'Trey Kauffman-Renn', 'Caleb Furst', 'Mason Gillis', 'Ethan Morton', 'Isaiah Thompson', 'Brian Wadell']
