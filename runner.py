@@ -1,6 +1,8 @@
 from randomize import getRandTeams
 from updatecsv import update_csv
 
-team1, team2 = getRandTeams()
+ringers, ballerz = getRandTeams()
+ringersScore = int(input("Ringers score: "))
+ballerzScore = int(input("Ballerz score: "))
 
-update_csv(team1, team2, 21, 9)
+update_csv("./NBA 2K Blacktop.csv", ringers, ballerz, ringersScore, ballerzScore)
