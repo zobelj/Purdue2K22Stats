@@ -1,10 +1,5 @@
-import csv
-import mysql.connector as mysql
+from sqlalchemy import create_engine
+import pymysql
 
-db = mysql.connect(
-    host = '127.0.0.1:3306',
-    user = 'root',
-    passwd = 'password'
-
-)
-print(db)
+engine = create_engine('mysql+pymysql://root:hello123@localhost/kenpom')
+all_years.to_sql(name = 'teams', con = engine, if_exists = 'replace')
