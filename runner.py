@@ -1,4 +1,4 @@
-from Purdue2K22Stats.updatesql import update_user_gamelogs
+from updatesql import update_user_gamelogs
 from randomize import getRandTeams
 from updatecsv import update_csv
 
