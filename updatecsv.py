@@ -4,8 +4,8 @@ from sqlalchemy import create_engine
 
 def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
     my_conn = create_engine('mysql+pymysql://sql5447048:muZwPef3av@sql5.freemysqlhosting.net/sql5447048')
-    data = pd.read_csv(csv_name)
-    GameID = max(data['GameID']) + 1
+  
+    GameID = my_conn.execute("SELECT max(GameID) FROM user_gamelogs") + 1
 
     for player in RingersDict:
         UserID = player
