@@ -1,3 +1,4 @@
+from Purdue2K22Stats.updatesql import update_user_gamelogs
 from randomize import getRandTeams
 from updatecsv import update_csv
 
@@ -14,3 +15,4 @@ ringersScore = int(input("\nRingers score: "))
 ballerzScore = int(input("Ballerz score: "))
 
 update_csv("./NBA 2K Blacktop.csv", ringers, ballerz, ringersScore, ballerzScore)
+update_user_gamelogs("./NBA 2K Blacktop.csv")
