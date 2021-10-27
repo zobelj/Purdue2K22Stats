@@ -2,8 +2,6 @@ import pandas as pd
 from csv import writer
 from sqlalchemy import create_engine
 
-
-
 def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
     my_conn = create_engine('mysql+pymysql://sql5447048:muZwPef3av@sql5.freemysqlhosting.net/sql5447048')
     data = pd.read_csv(csv_name)
