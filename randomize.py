@@ -1,8 +1,9 @@
 import random
 
 print("Choose user set: ")
-print("1. Roommates\n [Brant, Jeremy, Joe, Nick]")
-print("2. Complete database:\n [Brant, Jeremy, Joe, Nick, Jake, Lucas]")
+print("1. Roommates\n[Brant, Jeremy, Joe, Nick]")
+print("2. Complete database\n[Brant, Jeremy, Joe, Nick, Jake, Lucas]")
+print("3. Custom database\nEnter names separated by space")
 userSet = input("> ")
 
 validInput = False
@@ -12,6 +13,9 @@ while not validInput:
         validInput = True
     elif(userSet == "2"):
         users = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
+        validInput = True
+    elif(userSet == "3"):
+        users = input("> ").split()
         validInput = True
     else:
         print("Invalid input, try again.")
