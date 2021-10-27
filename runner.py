@@ -6,7 +6,6 @@ def printTeam(side, team):
     for user in team.keys():
         print(f"{user} : {team[user][0]}")
 
-
 ringers, ballerz = getRandTeams()
 printTeam("Ringers", ringers)
 printTeam("Ballerz", ballerz)
