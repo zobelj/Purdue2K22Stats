@@ -23,8 +23,6 @@ while reRandom.lower() != "n":
     printTeam("Ballerz", ballerz)
     reRandom = input("\nRe-randomize teams? (y/n/exit) ")
 
-    
-
 ringersScore = int(input("\nRingers score: "))
 ballerzScore = int(input("Ballerz score: "))
 
