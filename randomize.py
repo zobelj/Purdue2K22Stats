@@ -1,12 +1,12 @@
 import random
 
-users = ["Brant", "Jeremy", "Joe", "Nick"]
+users = ["Brant", "Nick", "Jake", "Lucas"]
 nameNumberTuples = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)]
 
 def getUsers():
     random.shuffle(users)
     team1_users = users[:2]
-    team2_users = users[2:]
+    team2_users = users[2:4]
 
     return team1_users, team2_users
 
