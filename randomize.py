@@ -1,29 +1,33 @@
 import random
 
-print("Choose user set: ")
-print("1. Roommates\n[Brant, Jeremy, Joe, Nick]")
-print("2. Complete database\n[Brant, Jeremy, Joe, Nick, Jake, Lucas]")
-print("3. Custom database\nEnter names separated by space")
-userSet = input("> ")
-
-validInput = False
-while not validInput:
-    if(userSet == "1"):
-        users = ["Brant", "Jeremy", "Joe", "Nick"]
-        validInput = True
-    elif(userSet == "2"):
-        users = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
-        validInput = True
-    elif(userSet == "3"):
-        users = input("> ").split()
-        validInput = True
-    else:
-        print("Invalid input, try again.")
-        userSet = input("> ")
-
 nameNumberTuples = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)]
 
+def getSettings():
+    print("Choose user set: ")
+    print("1. Roommates\n[Brant, Jeremy, Joe, Nick]")
+    print("2. Complete database\n[Brant, Jeremy, Joe, Nick, Jake, Lucas]")
+    print("3. Custom database\nEnter names separated by space")
+    userSet = input("> ")
+
+    validInput = False
+    while not validInput:
+        if(userSet == "1"):
+            users = ["Brant", "Jeremy", "Joe", "Nick"]
+            validInput = True
+        elif(userSet == "2"):
+            users = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
+            validInput = True
+        elif(userSet == "3"):
+            users = input("> ").split()
+            validInput = True
+        else:
+            print("Invalid input, try again.")
+            userSet = input("> ")
+
+    return users
+
 def getUsers():
+    users = getSettings()
     random.shuffle(users)
     team1_users = users[:2]
     team2_users = users[2:4]
