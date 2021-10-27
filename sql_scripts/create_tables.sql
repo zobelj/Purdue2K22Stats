@@ -11,18 +11,19 @@ OppPlayer2 tinyint);
 
 create table players(
 PlayerID tinyint,
-Name varchar(40));
+Name varchar(40),
+Position varchar(1));
 
-insert into players(PlayerID, Name) values
-(0, 'Mason Gillis'),
-(1, 'Brian Waddell'),
-(2, 'Eric Hunter Jr.'),
-(3, 'Caleb Furst'),
-(4, 'Trey Kaufman-Renn'),
-(5, 'Brandon Newman'),
-(11, 'Isaiah Thompson'),
-(15, 'Zach Edey'),
-(23, 'Jaden Ivey'),
-(25, 'Ethan Mortan'),
-(50, 'Trevion Williams'),
-(55, 'Sasha Stefanovic');
+insert into players(PlayerID, Name, Position) values
+(0, 'Mason Gillis','F'),
+(1, 'Brian Waddell','F'),
+(2, 'Eric Hunter Jr.','G'),
+(3, 'Caleb Furst','F'),
+(4, 'Trey Kaufman-Renn','F'),
+(5, 'Brandon Newman','G'),
+(11, 'Isaiah Thompson','G'),
+(15, 'Zach Edey','C'),
+(23, 'Jaden Ivey','G'),
+(25, 'Ethan Morton','G'),
+(50, 'Trevion Williams','C'),
+(55, 'Sasha Stefanovic','G');
