@@ -1,5 +1,4 @@
 from sqlalchemy import create_engine
-import pymysql
 import pandas as pd
 
 def update_user_gamelogs(csv_name):
