@@ -1,6 +1,5 @@
-from updatesql import update_user_gamelogs
 from randomize import getRandTeams
-from updatecsv import update_csv
+from updateSQL import update_sql
 
 def printTeam(side, team):
     print(f"\n{side}:")
@@ -26,5 +25,4 @@ while reRandom.lower() != "n":
 ringersScore = int(input("\nRingers score: "))
 ballerzScore = int(input("Ballerz score: "))
 
-update_csv("./NBA 2K Blacktop.csv", ringers, ballerz, ringersScore, ballerzScore)
-update_user_gamelogs("./NBA 2K Blacktop.csv")
+update_sql(ringers, ballerz, ringersScore, ballerzScore)
