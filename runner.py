@@ -6,7 +6,7 @@ def printTeam(side, team):
     for user in team.keys():
         print(f"{user} : {team[user][0]}")
 
-ringers, ballerz = getRandTeams()
+ringers, ballerz, users = getRandTeams(None)
 printTeam("Ringers", ringers)
 printTeam("Ballerz", ballerz)
 
@@ -14,14 +14,19 @@ printTeam("Ballerz", ballerz)
 reRandom = input("\nRe-randomize teams? (y/n/exit) ")
 
 while reRandom.lower() != "n":
-    if(reRandom == "exit"):
+    if(reRandom == "exit" or reRandom == "e"):
         exit()
-    ringers, ballerz = getRandTeams()
+
+    ringers, ballerz, users = getRandTeams(users)
     printTeam("Ringers", ringers)
     printTeam("Ballerz", ballerz)
     reRandom = input("\nRe-randomize teams? (y/n/exit) ")
 
-ringersScore = int(input("\nRingers score: "))
-ballerzScore = int(input("Ballerz score: "))
+# ask if the user wants to upload to the database
+upload = input("\nUpload to database? (y/n) ")
 
-update_sql(ringers, ballerz, ringersScore, ballerzScore)
+if(upload.lower() == "y"):
+    ringersScore = int(input("\nRingers score: "))
+    ballerzScore = int(input("Ballerz score: "))
+
+    update_sql(ringers, ballerz, ringersScore, ballerzScore)

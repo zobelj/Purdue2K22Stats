@@ -26,13 +26,16 @@ def getSettings():
 
     return users
 
-def getUsers():
-    users = getSettings()
+def getUsers(usersParam):
+    if(usersParam == None):
+        users = getSettings()
+    else:
+        users = usersParam
     random.shuffle(users)
     team1_users = users[:2]
     team2_users = users[2:4]
 
-    return team1_users, team2_users
+    return team1_users, team2_users,
 
 def getPlayers():
     selected_players = random.sample(nameNumberTuples, 4)
@@ -41,15 +44,14 @@ def getPlayers():
 
     return team1_players, team2_players
 
-def getRandTeams():
-
-    team1_users, team2_users = getUsers()
+def getRandTeams(users):
+    team1_users, team2_users, = getUsers(users)
     team1_players, team2_players = getPlayers()
 
     team1 = {user : player for user, player in zip(team1_users, team1_players)}
     team2 = {user : player for user, player in zip(team2_users, team2_players)}
 
-    return team1, team2
+    return team1, team2, users
 
 def printTeams():
     team1, team2 = getRandTeams()
