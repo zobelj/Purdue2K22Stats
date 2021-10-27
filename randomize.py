@@ -1,6 +1,22 @@
 import random
 
-users = ["Brant", "Nick", "Jake", "Lucas"]
+print("Choose user set: ")
+print("1. Roommates\n [Brant, Jeremy, Joe, Nick]")
+print("2. Complete database:\n [Brant, Jeremy, Joe, Nick, Jake, Lucas]")
+userSet = input("> ")
+
+validInput = False
+while not validInput:
+    if(userSet == "1"):
+        users = ["Brant", "Jeremy", "Joe", "Nick"]
+        validInput = True
+    elif(userSet == "2"):
+        users = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
+        validInput = True
+    else:
+        print("Invalid input, try again.")
+        userSet = input("> ")
+
 nameNumberTuples = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)]
 
 def getUsers():
