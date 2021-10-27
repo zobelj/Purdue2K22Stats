@@ -44,5 +44,5 @@ def update_sql(RingersDict, BallerzDict, RingersScore, BallerzScore):
         OppPlayer1 = oppList[0]
         OppPlayer2 = oppList[1]
         query = text("INSERT INTO  `sql5447048`.`user_gamelogs` (`GameID` ,`TeamID` ,`UserID` ,`PF`,`PA`,`PlayerID`,`TeammateID`,`OppPlayer1`,`OppPlayer2`) \
-                  VALUES (:GameID, 'Ballerz', :UserID, :PF, :PA, :PlayerID, :TeammateID, :OppPlayer1, :OppPlayer2)")
-        id=my_conn.execute(query, GameID=GameID, TeamID='Ballerz', UserID=UserID, PF=PF, PA=PA, PlayerID=PlayerID, TeammateID=TeammateID, OppPlayer1=OppPlayer1, OppPlayer2=OppPlayer2)
+                  VALUES (:GameID, 'Ringers', :UserID, :PF, :PA, :PlayerID, :TeammateID, :OppPlayer1, :OppPlayer2)")
+        id=my_conn.execute(query, GameID=GameID, TeamID='Ringers', UserID=UserID, PF=PF, PA=PA, PlayerID=PlayerID, TeammateID=TeammateID, OppPlayer1=OppPlayer1, OppPlayer2=OppPlayer2)
