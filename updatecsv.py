@@ -1,15 +1,11 @@
 import pandas as pd
 from csv import writer
+from sqlalchemy import create_engine
 
-def append_list_as_row(file_name, list_of_elem):
-    # Open file in append mode
-    with open(file_name, 'a+', newline='') as write_obj:
-        # Create a writer object from csv module
-        csv_writer = writer(write_obj)
-        # Add contents of list as last row in the csv file
-        csv_writer.writerow(list_of_elem)
+
 
 def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
+    my_conn = create_engine('mysql+pymysql://sql5447048:muZwPef3av@sql5.freemysqlhosting.net/sql5447048')
     data = pd.read_csv(csv_name)
     GameID = max(data['GameID']) + 1
 
@@ -27,7 +23,8 @@ def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
         OppPlayer1 = oppList[0]
         OppPlayer2 = oppList[1]
         addList = [GameID, 'Ringers', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2]
-        append_list_as_row(csv_name, addList)
+        id=my_conn.execute("INSERT INTO  `sql5447048`.`user_gamelogs` (`GameID` ,`TeamID` ,`UserID` ,`PF`,`PA`,`PlayerID`,`TeammateID`,`OppPlayer1`,`OppPlayer2`) \
+                  VALUES (GameID, 'Ringers', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2)")
     
     for player in BallerzDict:
         UserID = player
@@ -43,7 +40,8 @@ def update_csv(csv_name, RingersDict, BallerzDict, RingersScore, BallerzScore):
         OppPlayer1 = oppList[0]
         OppPlayer2 = oppList[1]
         addList = [GameID, 'Ballerz', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2]
-        append_list_as_row(csv_name, addList)
+        id=my_conn.execute("INSERT INTO  `sql5447048`.`user_gamelogs` (`GameID` ,`TeamID` ,`UserID` ,`PF`,`PA`,`PlayerID`,`TeammateID`,`OppPlayer1`,`OppPlayer2`) \
+                  VALUES (GameID, 'Ballerz', UserID, PF, PA, PlayerID, TeammateID, OppPlayer1, OppPlayer2)")
     
 
 
