@@ -6,8 +6,8 @@ from sqlalchemy.sql import text
 
 listRows = []
 with open('db_url.txt', 'r') as f:
-        db_url = f.read()
-        my_conn = create_engine(db_url)
+    db_url = f.read()
+    my_conn = create_engine(db_url)
 r_set=my_conn.execute("SELECT * FROM user_gamelogs");
 
 for row in r_set:
@@ -15,7 +15,19 @@ for row in r_set:
 
 mainData = pd.DataFrame(listRows, columns=['Index', 'GameID', 'TeamID', 'UserID', "PF", "PA", "PlayerID", "TeammateID", "OppPlayer1", "OppPlayer2"])
 
-listRows = []
+listPlayerRecordRows = []
+
+with my_conn.connect() as con:
+    file = open("sql_scripts/get_player_records.sql")
+    query = text(file.read())
+    rows = con.execute(query)
+    for row in rows:
+        listPlayerRecordRows.append(row)
+
+playerRecords = pd.DataFrame(listPlayerRecordRows, columns = ['PlayerID','Name', 'W','L','wpct','RegW','RegL','PPG','PAPG'])
+print(playerRecords)
+
+
 
 # X = data[['BA','oppBA','platoon']].to_numpy()
 # y = data[['H']].values.flatten()
