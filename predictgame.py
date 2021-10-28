@@ -18,23 +18,21 @@ mainData = pd.DataFrame(listRows, columns=['Index', 'GameID', 'TeamID', 'UserID'
 listPlayerRecordRows = []
 
 with my_conn.connect() as con:
-    file = open("sql_scripts/get_player_records.sql")
+    file = open("sql_scripts/logistic_data_wpct.sql")
     query = text(file.read())
     rows = con.execute(query)
     for row in rows:
         listPlayerRecordRows.append(row)
 
-playerRecords = pd.DataFrame(listPlayerRecordRows, columns = ['PlayerID','Name', 'W','L','wpct','RegW','RegL','PPG','PAPG'])
+playerRecords = pd.DataFrame(listPlayerRecordRows, columns = ['W','Player','Teammate', 'Opp1','Opp2'])
 print(playerRecords)
 
 
 
-# X = data[['BA','oppBA','platoon']].to_numpy()
-# y = data[['H']].values.flatten()
-# clf = LogisticRegression(random_state=0, max_iter = 100000).fit(X, y)
-# clf.predict(X)
+X = playerRecords[['Player','Teammate','Opp1','Opp2']].to_numpy()
+y = playerRecords[['W']].values.flatten()
+clf = LogisticRegression(random_state=0, max_iter = 100000).fit(X, y)
+clf.predict(X)
 
-# print(clf.predict_proba([[.305,.2,1]]))
-
-# print(clf.score(X, y))
-# print(clf.coef_, clf.intercept_)
+print(clf.score(X, y))
+print(clf.coef_, clf.intercept_)
