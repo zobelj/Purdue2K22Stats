@@ -53,6 +53,20 @@ def getRandTeams(users):
 
     return team1, team2, users
 
+def htmlRandomize():
+    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"])[:2]
+
+    json_data = {"team1_user1" : list(team1.keys())[0],
+                "team1_user2" : list(team1.keys())[1],
+                "team2_user1" : list(team2.keys())[0],
+                "team2_user2" : list(team2.keys())[1],
+                "team1_player1" : team1[list(team1.keys())[0]],
+                "team1_player2" : team1[list(team1.keys())[1]],
+                "team2_player1" : team2[list(team2.keys())[0]],
+                "team2_player2" : team2[list(team2.keys())[1]]}
+
+    return json_data
+
 def printTeams():
     team1, team2 = getRandTeams()
 
