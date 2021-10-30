@@ -1,9 +1,9 @@
 from flask import Flask, render_template, request, jsonify
 from randomize import htmlRandomize, htmlUploadScores
+from sqlalchemy import create_engine
+from sqlalchemy.sql import text
 
 app = Flask(__name__)
-
-PASSWORD = "test123"
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -11,6 +11,21 @@ def index():
         pass
     else:
         return render_template('index.html')
+
+@app.route('/data')
+def data():
+    with open('db_url.txt', 'r') as f:
+        db_url = f.read()
+        my_conn = create_engine(db_url)
+    
+    with my_conn.connect() as conn:
+        file = open("./sql_scripts/create_html_table.sql")
+        query = text(file.read())
+        rows = conn.execute(query)
+        data = rows.fetchall()
+        print(data)
+        
+    return render_template('data.html', data=data)
 
 @app.route('/about')
 def about():

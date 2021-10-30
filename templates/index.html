@@ -26,11 +26,14 @@
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/data">Data</a>
+          </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
         </nav>
 
-    <!-- 2 Bootstrap select menus for number of users and number of players per team -->
+    <!-- Randomizer specific code -->
     <br>
     <script>
       function randomizeTeams() {
@@ -93,6 +96,11 @@
           },
           body: JSON.stringify(data)
         });
+        // clear the input fields
+        document.getElementById("team1_score").value = "";
+        document.getElementById("team2_score").value = "";
+
+        alert("Uploaded to database.");
       }
     </script>
 
