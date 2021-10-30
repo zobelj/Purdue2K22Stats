@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from randomize import htmlRandomize
+from randomize import htmlRandomize, htmlUploadScores
 
 app = Flask(__name__)
 
@@ -16,13 +16,21 @@ def index():
 def about():
     return render_template('about.html')
 
-@app.route("/randomize")
+@app.route("/randomize", methods=['GET', 'POST'])
 def randomize():
     if(request.method == "GET"):
         return jsonify(htmlRandomize())
 
-    else:
-        return "Bad requst.", 400
+    elif(request.method == "POST"):
+        return "Bad request!", 400
+
+@app.route("/upload", methods=['GET', 'POST'])
+def uploadScores():
+    if(request.method == "GET"):
+        return "Bad request!", 400
+
+    elif(request.method == "POST"):
+        return htmlUploadScores(request.json)
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 import random
+from updateSQL import update_sql
 
 nameNumberTuples = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)]
 
@@ -66,6 +67,27 @@ def htmlRandomize():
                 "team2_player2" : team2[list(team2.keys())[1]]}
 
     return json_data
+
+def htmlUploadScores(json_data):
+    ringers_score = json_data['team1_score']
+    ballerz_score = json_data['team2_score']
+
+    t1_user1 = json_data['team1_user1']
+    t1_user2 = json_data['team1_user2']
+    t2_user1 = json_data['team2_user1']
+    t2_user2 = json_data['team2_user2']
+
+    t1_player1, t1_p1_num = json_data['team1_player1'].split(',')
+    t1_player2, t1_p2_num = json_data['team1_player2'].split(',')
+    t2_player1, t2_p1_num = json_data['team2_player1'].split(',')
+    t2_player2, t2_p2_num = json_data['team2_player2'].split(',')
+
+
+    ringers_dict = {t1_user1 : (t1_player1, t1_p1_num), t1_user2 : (t1_player2, t1_p2_num)}
+    ballerz_dict = {t2_user1 : (t2_player1, t2_p1_num), t2_user2 : (t2_player2, t2_p2_num)}
+
+    update_sql(ringers_dict, ballerz_dict, ringers_score, ballerz_score)
+    return "Success"
 
 def printTeams():
     team1, team2 = getRandTeams()
