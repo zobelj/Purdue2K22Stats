@@ -1,0 +1,43 @@
+.btn-primary {
+    background-color: #000000;
+    border-color: #000000;
+    color: #CFB53B;
+}
+
+.btn-primary:hover {
+    background-color: #1a1a1a;
+    border-color: #1a1a1a;
+    color: #CFB53B;
+}
+
+.btn-primary:active {
+    background-color: #3a3a3a !important;
+    border-color: #3a3a3a !important;
+    color: #CFB53B !important;
+}
+
+.col-auto-padded {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.justify-content-center {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.player-img {
+    max-width: 50px;
+    max-height: 50px
+}
+
+.team-img {
+    vertical-align: bottom;
+    max-width: 150px;
+}
+
+.table{
+    font-size: 15px;
+}

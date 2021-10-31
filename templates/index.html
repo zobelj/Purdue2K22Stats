@@ -7,14 +7,15 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="shortcut icon" type="image/jpg" href="/static/purdue.png">
+    <link rel="stylesheet" href="/static//styles/index.css" type="text/css">
+    <link rel="shortcut icon" href="/static/imgs/purdue.png" type="image/jpg">
     <title> Purdue 2K22 Tool</title>
   </head>
   <body>
     <!-- bootstrap navigation ribbon -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <a class="navbar-brand" href="/">
-        <img src="/static/purdue.png" alt="Purdue Logo" width="50" height="50">
+        <img src="/static/imgs/purdue.png" alt="Purdue Logo" width="50" height="50">
       </a>
       
       <a class="navbar-brand" href="#">Purdue 2K22 Tool</a>
@@ -29,14 +30,18 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/data">Data</a>
+            <a class="nav-link" href="/user-records">User Records</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/player-records">Player Records</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/about">About</a>
           </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
-        </nav>
+      </div>
+    </nav>
 
     <!-- Randomizer specific code -->
     <br>
@@ -51,19 +56,19 @@
             document.getElementById("team1_player1").innerHTML = data.team1_player1[0] + ", #" + data.team1_player1[1];
 
             // replace period in string with space
-            document.getElementById("team1_player1_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team1_player1[1] + "_" + data.team1_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
+            document.getElementById("team1_player1_pic").innerHTML = "<img class='player-img' src=/static/imgs/" + data.team1_player1[1] + "_" + data.team1_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team1_user2").innerHTML = data.team1_user2
             document.getElementById("team1_player2").innerHTML = data.team1_player2[0] + ", #" + data.team1_player2[1];
-            document.getElementById("team1_player2_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team1_player2[1] + "_" + data.team1_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
+            document.getElementById("team1_player2_pic").innerHTML = "<img class='player-img' src=/static/imgs/" + data.team1_player2[1] + "_" + data.team1_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team2_user1").innerHTML = data.team2_user1
             document.getElementById("team2_player1").innerHTML = data.team2_player1[0] + ", #" + data.team2_player1[1];
-            document.getElementById("team2_player1_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team2_player1[1] + "_" + data.team2_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
+            document.getElementById("team2_player1_pic").innerHTML = "<img class='player-img' src=/static/imgs/" + data.team2_player1[1] + "_" + data.team2_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team2_user2").innerHTML = data.team2_user2
             document.getElementById("team2_player2").innerHTML = data.team2_player2[0] + ", #" + data.team2_player2[1];
-            document.getElementById("team2_player2_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team2_player2[1] + "_" + data.team2_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
+            document.getElementById("team2_player2_pic").innerHTML = "<img class='player-img' src=/static/imgs/" + data.team2_player2[1] + "_" + data.team2_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
           });
         }
     </script>
@@ -120,13 +125,13 @@
     <div class="container">
       <div class="row justify-content-center" style="margin-bottom: 20px">
         <div class="col-auto">
-          <button type="button" class="btn btn-primary" style="background-color: #CFB53B;border-color: #CFB53B" onclick="randomizeTeams()">Randomize Teams</button>
+          <button type="button" class="btn btn-primary" onclick="randomizeTeams()">Randomize Teams</button>
         </div>
       </div>
 
       <div class="row">
         <div class="col">
-        <table class="table" id="user-player-table" style="font-size: 15px">
+        <table class="table" id="user-player-table">
           <thead>
             <tr>
               <th scope="col"></th>
@@ -137,7 +142,7 @@
           </thead>
           <tbody>
             <tr>
-              <td rowspan="2" style="text-align:center"><img width="100%" style="vertical-align:bottom;max-width:150px" src="/static/ringers_logo.png"/></td>
+              <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ringers_logo.png"/></td>
               <td id="team1_user1">&nbsp</td>
               <td id="team1_player1">&nbsp</td>
               <td id=team1_player1_pic>&nbsp</td>
@@ -149,7 +154,7 @@
               <td id=team1_player2_pic>&nbsp</td>
             </tr>
             <tr>
-              <td rowspan="2" style="text-align:center"><img width="100%" style="vertical-align:bottom;max-width:150px" src="/static/ballerz_logo.png"/></td>
+              <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ballerz_logo.png"/></td>
               <td id="team2_user1">&nbsp</td>
               <td id="team2_player1">&nbsp</td>
               <td id=team2_player1_pic>&nbsp</td>
@@ -166,19 +171,19 @@
   
       <!-- bootstrap text input for scores -->
       <div class="row justify-content-center">
-        <div class="col-auto" style="margin-top:10px;margin-bottom:10px">
+        <div class="col-auto-padded">
           <input type="text" class="form-control" id="team1_score" placeholder="Ringers Score">
         </div>
 
-        <div class="col-auto" style="margin-top:10px;margin-bottom:10px">
+        <div class="col-auto-padded">
           <input type="text" class="form-control" id="team2_score" placeholder="Ballerz Score">
         </div>
 
       </div>
 
-      <div class="row justify-content-center" style="margin-top: 20px;margin-bottom:20px">
+      <div class="row justify-content-center">
         <div class="col-auto">
-          <button type="button" class="btn btn-primary" style="background-color: #CFB53B;border-color: #CFB53B" onclick="uploadScores()">Upload to Database</button>
+          <button type="button" class="btn btn-primary" onclick="uploadScores()">Upload to Database</button>
         </div>
         <div class="column">
         <br>
