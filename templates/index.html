@@ -70,7 +70,7 @@
 
     <script>
       function uploadScores() {
-        var confirmBool = confirm("Uploaded to database?");
+        var confirmBool = confirm("Upload to database?");
 
           if(confirmBool) {
           // get team1_score and team2_score values
@@ -118,9 +118,9 @@
     </script>
 
     <div class="container">
-      <div class="row" style="margin-bottom: 20px">
+      <div class="row justify-content-center" style="margin-bottom: 20px">
         <div class="col-auto">
-          <button type="button" class="btn btn-primary" onclick="randomizeTeams()">Randomize Teams</button>
+          <button type="button" class="btn btn-primary" style="background-color: #CFB53B;border-color: #CFB53B" onclick="randomizeTeams()">Randomize Teams</button>
         </div>
       </div>
 
@@ -129,7 +129,7 @@
         <table class="table" id="user-player-table" style="font-size: 15px">
           <thead>
             <tr>
-              <th scope="col">Team</th>
+              <th scope="col"></th>
               <th scope="col">User</th>
               <th scope="col">Player</th>
               <th scope="col"></th>
@@ -137,48 +137,48 @@
           </thead>
           <tbody>
             <tr>
-              <td >Ringers</td>
-              <td id="team1_user1">User 1</td>
-              <td id="team1_player1">Player 1</td>
-              <td id=team1_player1_pic></td>
+              <td rowspan="2" style="text-align:center"><img width="100%" style="vertical-align:bottom;max-width:150px" src="/static/ringers_logo.png"/></td>
+              <td id="team1_user1">&nbsp</td>
+              <td id="team1_player1">&nbsp</td>
+              <td id=team1_player1_pic>&nbsp</td>
             </tr>
             <tr>
-              <td>Ringers</td>
-              <td id="team1_user2">User 2</td>
-              <td id="team1_player2">Player 2</td>
-              <td id=team1_player2_pic></td>
+              
+              <td id="team1_user2">&nbsp</td>
+              <td id="team1_player2">&nbsp</td>
+              <td id=team1_player2_pic>&nbsp</td>
             </tr>
             <tr>
-              <td>Ballerz</td>
-              <td id="team2_user1">User 1</td>
-              <td id="team2_player1">Player 1</td>
-              <td id=team2_player1_pic></td>
+              <td rowspan="2" style="text-align:center"><img width="100%" style="vertical-align:bottom;max-width:150px" src="/static/ballerz_logo.png"/></td>
+              <td id="team2_user1">&nbsp</td>
+              <td id="team2_player1">&nbsp</td>
+              <td id=team2_player1_pic>&nbsp</td>
             </tr>
             <tr>
-              <td>Ballerz</td>
-              <td id="team2_user2">User 2</td>
-              <td id="team2_player2">Player 2</td>
-              <td id=team2_player2_pic></td>
+              
+              <td id="team2_user2">&nbsp</td>
+              <td id="team2_player2">&nbsp</td>
+              <td id=team2_player2_pic>&nbsp</td>
           </tbody>
         </table>
       </div>
       </div>
   
       <!-- bootstrap text input for scores -->
-      <div class="row">
-        <div class="col-auto">
+      <div class="row justify-content-center">
+        <div class="col-auto" style="margin-top:10px;margin-bottom:10px">
           <input type="text" class="form-control" id="team1_score" placeholder="Ringers Score">
         </div>
 
-        <div class="col-auto">
+        <div class="col-auto" style="margin-top:10px;margin-bottom:10px">
           <input type="text" class="form-control" id="team2_score" placeholder="Ballerz Score">
         </div>
 
       </div>
 
-      <div class="row" style="margin-top: 20px">
+      <div class="row justify-content-center" style="margin-top: 20px;margin-bottom:20px">
         <div class="col-auto">
-          <button type="button" class="btn btn-primary" onclick="uploadScores()">Upload to Database</button>
+          <button type="button" class="btn btn-primary" style="background-color: #CFB53B;border-color: #CFB53B" onclick="uploadScores()">Upload to Database</button>
         </div>
         <div class="column">
         <br>
