@@ -34,7 +34,7 @@ def player_records():
         my_conn = create_engine(db_url)
     
     with my_conn.connect() as conn:
-        file = open("./sql_scripts/create_html_table.sql")
+        file = open("./sql_scripts/get_player_records.sql")
         query = text(file.read())
         rows = conn.execute(query)
         data = rows.fetchall()
