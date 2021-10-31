@@ -1,7 +1,9 @@
 import random
 from updateSQL import update_sql
 
-nameNumberTuples = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)]
+guards = [("Eric Hunter Jr.", 2), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Sasha Stefanovic", 55)]
+forwards = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4)]
+centers = [("Zach Edey", 15), ("Trevion Williams", 50)]
 
 def getSettings():
     print("Choose user set: ")
@@ -39,7 +41,7 @@ def getUsers(usersParam):
     return team1_users, team2_users,
 
 def getPlayers():
-    selected_players = random.sample(nameNumberTuples, 4)
+    selected_players = random.sample(guards + forwards + centers, 4)
     team1_players = selected_players[:2]
     team2_players = selected_players[2:]
 
@@ -66,6 +68,7 @@ def htmlRandomize():
                 "team2_player1" : team2[list(team2.keys())[0]],
                 "team2_player2" : team2[list(team2.keys())[1]]}
 
+    print(json_data)
     return json_data
 
 def htmlUploadScores(json_data):
@@ -77,14 +80,24 @@ def htmlUploadScores(json_data):
     t2_user1 = json_data['team2_user1']
     t2_user2 = json_data['team2_user2']
 
-    t1_player1, t1_p1_num = json_data['team1_player1'].split(',')
-    t1_player2, t1_p2_num = json_data['team1_player2'].split(',')
-    t2_player1, t2_p1_num = json_data['team2_player1'].split(',')
-    t2_player2, t2_p2_num = json_data['team2_player2'].split(',')
+    # split player name/number into two elements
+    t1_p1 = json_data['team1_player1'].split(',')
+    t1_p2 = json_data['team1_player2'].split(',')
+    t2_p1 = json_data['team2_player1'].split(',')
+    t2_p2 = json_data['team2_player2'].split(',')
 
+    # remove # from player number
+    t1_p1_name = t1_p1[0]
+    t1_p1_num = t1_p1[1][1:].replace('#', '')
+    t1_p2_name = t1_p2[0]
+    t1_p2_num = t1_p2[1][1:].replace('#', '')
+    t2_p1_name = t2_p1[0]
+    t2_p1_num = t2_p1[1][1:].replace('#', '')
+    t2_p2_name = t2_p2[0]
+    t2_p2_num = t2_p2[1][1:].replace('#', '')
 
-    ringers_dict = {t1_user1 : (t1_player1, t1_p1_num), t1_user2 : (t1_player2, t1_p2_num)}
-    ballerz_dict = {t2_user1 : (t2_player1, t2_p1_num), t2_user2 : (t2_player2, t2_p2_num)}
+    ringers_dict = {t1_user1 : (t1_p1_name, t1_p1_num), t1_user2 : (t1_p2_name, t1_p2_num)}
+    ballerz_dict = {t2_user1 : (t2_p1_name, t2_p1_num), t2_user2 : (t2_p2_name, t2_p2_num)}
 
     update_sql(ringers_dict, ballerz_dict, ringers_score, ballerz_score)
     return "Success"

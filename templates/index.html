@@ -7,12 +7,16 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <title>Purdue 2K22 Tool</title>
+    <link rel="shortcut icon" type="image/jpg" href="/static/purdue.png">
+    <title> Purdue 2K22 Tool</title>
   </head>
   <body>
     <!-- bootstrap navigation ribbon -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">
+        <img src="/static/purdue.png" alt="Purdue Logo" width="50" height="50">
+      </a>
+      
       <a class="navbar-brand" href="#">Purdue 2K22 Tool</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -44,133 +48,149 @@
           .then(data => {
             // update the select menus with the new data
             document.getElementById("team1_user1").innerHTML = data.team1_user1
-            document.getElementById("team1_player1").innerHTML = data.team1_player1
+            document.getElementById("team1_player1").innerHTML = data.team1_player1[0] + ", #" + data.team1_player1[1];
+
+            // replace period in string with space
+            document.getElementById("team1_player1_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team1_player1[1] + "_" + data.team1_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team1_user2").innerHTML = data.team1_user2
-            document.getElementById("team1_player2").innerHTML = data.team1_player2
+            document.getElementById("team1_player2").innerHTML = data.team1_player2[0] + ", #" + data.team1_player2[1];
+            document.getElementById("team1_player2_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team1_player2[1] + "_" + data.team1_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team2_user1").innerHTML = data.team2_user1
-            document.getElementById("team2_player1").innerHTML = data.team2_player1
+            document.getElementById("team2_player1").innerHTML = data.team2_player1[0] + ", #" + data.team2_player1[1];
+            document.getElementById("team2_player1_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team2_player1[1] + "_" + data.team2_player1[0].split(" ").slice(0,2).join("_") + ".JPG />";
 
             document.getElementById("team2_user2").innerHTML = data.team2_user2
-            document.getElementById("team2_player2").innerHTML = data.team2_player2
+            document.getElementById("team2_player2").innerHTML = data.team2_player2[0] + ", #" + data.team2_player2[1];
+            document.getElementById("team2_player2_pic").innerHTML = "<img style='max-width:50px;max-height:50px' src=/static/" + data.team2_player2[1] + "_" + data.team2_player2[0].split(" ").slice(0,2).join("_") + ".JPG />";
           });
         }
     </script>
 
     <script>
       function uploadScores() {
-        // get team1_score and team2_score values
-        var team1_score = document.getElementById("team1_score").value
-        var team2_score = document.getElementById("team2_score").value
-        
-        // get user and players
-        var Table = document.getElementById("user-player-table")
-        var team1_user1 = Table.rows[1].cells[1].innerHTML
-        var team1_player1 = Table.rows[1].cells[2].innerHTML
-        var team1_user2 = Table.rows[2].cells[1].innerHTML
-        var team1_player2 = Table.rows[2].cells[2].innerHTML
-        var team2_user1 = Table.rows[3].cells[1].innerHTML
-        var team2_player1 = Table.rows[3].cells[2].innerHTML
-        var team2_user2 = Table.rows[4].cells[1].innerHTML
-        var team2_player2 = Table.rows[4].cells[2].innerHTML
+        var confirmBool = confirm("Uploaded to database?");
 
-        // create a json object with the data
-        var data = {
-          team1_score: team1_score,
-          team2_score: team2_score,
-          team1_user1: team1_user1,
-          team1_user2: team1_user2,
-          team1_player1: team1_player1,
-          team1_player2: team1_player2,
-          team2_user1: team2_user1,
-          team2_user2: team2_user2,
-          team2_player1: team2_player1,
-          team2_player2: team2_player2
-        };
-        
-        // fetch with post method to /upload url
-        fetch('/upload', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(data)
-        });
-        // clear the input fields
-        document.getElementById("team1_score").value = "";
-        document.getElementById("team2_score").value = "";
+          if(confirmBool) {
+          // get team1_score and team2_score values
+          var team1_score = document.getElementById("team1_score").value
+          var team2_score = document.getElementById("team2_score").value
+          
+          // get user and players
+          var Table = document.getElementById("user-player-table")
+          var team1_user1 = Table.rows[1].cells[1].innerHTML
+          var team1_player1 = Table.rows[1].cells[2].innerHTML
+          var team1_user2 = Table.rows[2].cells[1].innerHTML
+          var team1_player2 = Table.rows[2].cells[2].innerHTML
+          var team2_user1 = Table.rows[3].cells[1].innerHTML
+          var team2_player1 = Table.rows[3].cells[2].innerHTML
+          var team2_user2 = Table.rows[4].cells[1].innerHTML
+          var team2_player2 = Table.rows[4].cells[2].innerHTML
 
-        alert("Uploaded to database.");
+          // create a json object with the data
+          var data = {
+            team1_score: team1_score,
+            team2_score: team2_score,
+            team1_user1: team1_user1,
+            team1_user2: team1_user2,
+            team1_player1: team1_player1,
+            team1_player2: team1_player2,
+            team2_user1: team2_user1,
+            team2_user2: team2_user2,
+            team2_player1: team2_player1,
+            team2_player2: team2_player2
+          };
+          
+          // fetch with post method to /upload url
+          fetch('/upload', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+          });
+          // clear the input fields
+          document.getElementById("team1_score").value = "";
+          document.getElementById("team2_score").value = "";
+          }
       }
     </script>
 
     <div class="container">
-      <div class="row">
-        <div class="col-sm6">
+      <div class="row" style="margin-bottom: 20px">
+        <div class="col-auto">
           <button type="button" class="btn btn-primary" onclick="randomizeTeams()">Randomize Teams</button>
         </div>
       </div>
 
       <div class="row">
-        <div class="col-sm12">
-        <table class="table" id="user-player-table">
+        <div class="col">
+        <table class="table" id="user-player-table" style="font-size: 15px">
           <thead>
             <tr>
               <th scope="col">Team</th>
               <th scope="col">User</th>
               <th scope="col">Player</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Ringers</td>
+              <td >Ringers</td>
               <td id="team1_user1">User 1</td>
               <td id="team1_player1">Player 1</td>
+              <td id=team1_player1_pic></td>
             </tr>
             <tr>
               <td>Ringers</td>
               <td id="team1_user2">User 2</td>
               <td id="team1_player2">Player 2</td>
+              <td id=team1_player2_pic></td>
             </tr>
             <tr>
               <td>Ballerz</td>
               <td id="team2_user1">User 1</td>
               <td id="team2_player1">Player 1</td>
+              <td id=team2_player1_pic></td>
             </tr>
             <tr>
               <td>Ballerz</td>
               <td id="team2_user2">User 2</td>
               <td id="team2_player2">Player 2</td>
+              <td id=team2_player2_pic></td>
           </tbody>
         </table>
       </div>
       </div>
-
+  
+      <!-- bootstrap text input for scores -->
       <div class="row">
-        <div class="col-sm6">
-          <!-- bootstrap text input for scores -->
-          <div class="form-group">
-            <label for="team1_score">Ringers Score</label>
-            <input type="text" class="form-control" id="team1_score">
-          </div>
+        <div class="col-auto">
+          <input type="text" class="form-control" id="team1_score" placeholder="Ringers Score">
         </div>
 
-        <div class="col-sm6">
-          <div class="form-group">
-            <label for="team2_score">Ballerz Score</label>
-            <input type="text" class="form-control" id="team2_score">
-          </div>   
+        <div class="col-auto">
+          <input type="text" class="form-control" id="team2_score" placeholder="Ballerz Score">
         </div>
+
       </div>
-      <div class="row">
-        <div class="col-sm6">
+
+      <div class="row" style="margin-top: 20px">
+        <div class="col-auto">
           <button type="button" class="btn btn-primary" onclick="uploadScores()">Upload to Database</button>
         </div>
         <div class="column">
         <br>
         </div>
       </div>
+    </div>
+
+    <!-- bootstrap basic footer -->
+    <!-- Bootstrap footer at the bottom of the page -->
+
+
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
