@@ -3,4 +3,4 @@ sum((PF = 21 and PF > PA) or (PF = 22 and PA <= 19)) as regW, sum((PA = 21 and P
 round(avg(PF),1) as PPG, round(avg(PA),1) as PAPG from user_gamelogs
 join players using(PlayerID)
 group by PlayerID
-order by W desc;
+order by wpct desc;
