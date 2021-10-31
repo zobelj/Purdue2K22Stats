@@ -26,7 +26,6 @@ def user_records():
         
     return render_template('user-records.html', data=data)
 
-
 @app.route('/player-records')
 def player_records():
     with open('db_url.txt', 'r') as f:
