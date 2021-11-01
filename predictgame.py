@@ -27,8 +27,6 @@ with my_conn.connect() as con:
 playerRecords = pd.DataFrame(listPlayerRecordRows, columns = ['W','Player','Teammate', 'Opp1','Opp2'])
 print(playerRecords)
 
-
-
 X = playerRecords[['Player','Teammate','Opp1','Opp2']].to_numpy()
 y = playerRecords[['W']].values.flatten()
 clf = LogisticRegression(random_state=0, max_iter = 100000).fit(X, y)

@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
-from randomize import htmlRandomize, htmlUploadScores
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
+
+from randomize import htmlRandomize, htmlUploadScores
+from deleteTestUploads import deleteTestUploads
 
 app = Flask(__name__)
 
@@ -62,6 +64,11 @@ def uploadScores():
     elif(request.method == "POST"):
         return htmlUploadScores(request.json)
 
+@app.route("/deleteTestUploads")
+def deleteTestUploadsButton():
+    deleteTestUploads()
+    
+    return "Success!", 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)

@@ -115,12 +115,6 @@ def htmlUploadScores(json_data):
     update_sql(ringers_dict, ballerz_dict, ringers_score, ballerz_score)
     return "Success"
 
-def printTeams():
-    team1, team2 = getRandTeams()
-
-    print("Team 1:\n", team1)
-    print("Team 2:\n", team2)
-
 def getUserRecordWithPlayer(UserID, PlayerID):
     with open('db_url.txt', 'r') as f:
         db_url = f.read()
@@ -137,7 +131,7 @@ def getUserRecords(UserID):
     query = text("select sum(PF > PA) as W, sum(PA > PF) as L, sum(PF > PA)/count(*) as wpct from user_gamelogs where UserID = :UserID group by UserID order by W desc;")
     id=my_conn.execute(query, UserID=UserID)
     for row in id:
-        return row[0], row[1]
+        return int(row[0]), int(row[1])
 
 def getUserComboRecords(UserID, Teammate):
     with open('db_url.txt', 'r') as f:
@@ -146,8 +140,9 @@ def getUserComboRecords(UserID, Teammate):
     query = text("select sum(u1.PF > u1.PA) as W, sum(u1.PF < u1.PA) as L from user_gamelogs u1 join user_gamelogs u2 on u1.GameID = u2.GameID and u1.TeamID = u2.TeamID and u1.UserID != u2.UserID where u1.UserID < u2.UserID and u1.UserID = :UserID and u2.UserID = :Teammate group by u1.UserID, u2.UserID order by W desc;")
     id=my_conn.execute(query, UserID=UserID, Teammate = Teammate)
     for row in id:
-        return row[0], row[1]
-print(getUserComboRecords("Jeremy", "Nick"))
+        return int(row[0]), int(row[1])
 
 if __name__ == "__main__":
-    printTeams()
+    # test
+    wins, losses = getUserRecords("Jeremy")
+    print(wins, losses)

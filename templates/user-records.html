@@ -29,30 +29,39 @@
       </head>
 <body>
     <div id="header"></div>
-
-    <h3>2K22 Data</h3>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Wins</th>
-                <th>Losses</th>
-                <th>Points per Game</th>
-                <th>Points Against per Game</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-                <tr>
-                    <td>{{ row[0] }}</td>
-                    <td>{{ row[1] }}</td>
-                    <td>{{ row[2] }}</td>
-                    <td>{{ row[3] }}</td>
-                    <td>{{ row[4] }}</td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container-md">
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <h2>2K22 User Data</h2>
+          </div>
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-auto">
+            <table class="table">
+              <thead>
+                  <tr>
+                      <th>Name</th>
+                      <th>Wins</th>
+                      <th>Losses</th>
+                      <th>Points per Game</th>
+                      <th>Points Against per Game</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for row in data %}
+                      <tr>
+                          <td>{{ row[0] }}</td>
+                          <td>{{ row[1] }}</td>
+                          <td>{{ row[2] }}</td>
+                          <td>{{ row[3] }}</td>
+                          <td>{{ row[4] }}</td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
