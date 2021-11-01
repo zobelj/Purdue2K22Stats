@@ -1,5 +1,9 @@
 import random
 from updateSQL import update_sql
+from sqlalchemy import create_engine
+from sqlalchemy.sql import text
+
+
 
 guards = [("Eric Hunter Jr.", 2), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Sasha Stefanovic", 55)]
 forwards = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4)]
@@ -116,6 +120,34 @@ def printTeams():
 
     print("Team 1:\n", team1)
     print("Team 2:\n", team2)
+
+def getUserRecordWithPlayer(UserID, PlayerID):
+    with open('db_url.txt', 'r') as f:
+        db_url = f.read()
+    my_conn = create_engine(db_url)
+    query = text("select sum(PF > PA) as W, sum(PA > PF) as L, sum(PF > PA)/count(*) as wpct from user_gamelogs join players using(PlayerID) where UserID = :UserID and PlayerID = :PlayerID group by UserID, Name order by W desc;")
+    id=my_conn.execute(query, UserID=UserID, PlayerID = PlayerID)
+    for row in id:
+        return row[0], row[1], row[2]
+
+def getUserRecords(UserID):
+    with open('db_url.txt', 'r') as f:
+        db_url = f.read()
+    my_conn = create_engine(db_url)
+    query = text("select sum(PF > PA) as W, sum(PA > PF) as L, sum(PF > PA)/count(*) as wpct from user_gamelogs where UserID = :UserID group by UserID order by W desc;")
+    id=my_conn.execute(query, UserID=UserID)
+    for row in id:
+        return row[0], row[1]
+
+def getUserComboRecords(UserID, Teammate):
+    with open('db_url.txt', 'r') as f:
+        db_url = f.read()
+    my_conn = create_engine(db_url)
+    query = text("select sum(u1.PF > u1.PA) as W, sum(u1.PF < u1.PA) as L from user_gamelogs u1 join user_gamelogs u2 on u1.GameID = u2.GameID and u1.TeamID = u2.TeamID and u1.UserID != u2.UserID where u1.UserID < u2.UserID and u1.UserID = :UserID and u2.UserID = :Teammate group by u1.UserID, u2.UserID order by W desc;")
+    id=my_conn.execute(query, UserID=UserID, Teammate = Teammate)
+    for row in id:
+        return row[0], row[1]
+print(getUserComboRecords("Jeremy", "Nick"))
 
 if __name__ == "__main__":
     printTeams()
