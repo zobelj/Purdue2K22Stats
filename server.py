@@ -5,6 +5,8 @@ from sqlalchemy.sql import text
 
 app = Flask(__name__)
 
+DB_URL = "mysql+pymysql://sql5447048:muZwPef3av@sql5.freemysqlhosting.net/sql5447048"
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -14,9 +16,9 @@ def index():
 
 @app.route('/user-records')
 def user_records():
-    with open('db_url.txt', 'r') as f:
-        db_url = f.read()
-        my_conn = create_engine(db_url)
+    #with open('db_url.txt', 'r') as f:
+    #    db_url = f.read()
+    my_conn = create_engine(DB_URL)
     
     with my_conn.connect() as conn:
         file = open("./sql_scripts/create_html_table.sql")
@@ -28,9 +30,9 @@ def user_records():
 
 @app.route('/player-records')
 def player_records():
-    with open('db_url.txt', 'r') as f:
-        db_url = f.read()
-        my_conn = create_engine(db_url)
+    #with open('db_url.txt', 'r') as f:
+    #    db_url = f.read()
+    my_conn = create_engine(DB_URL)
     
     with my_conn.connect() as conn:
         file = open("./sql_scripts/get_player_records.sql")
@@ -46,8 +48,8 @@ def about():
 
 @app.route("/randomize", methods=['GET', 'POST'])
 def randomize():
-    if(request.method == "GET"):
-        return jsonify(htmlRandomize())
+    if(request.method == "POST"):
+        return jsonify(htmlRandomize(request.json))
 
     elif(request.method == "POST"):
         return "Bad request!", 400

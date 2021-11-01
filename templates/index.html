@@ -5,50 +5,70 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- JSQuery, Popper, Bootstrap -->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/static//styles/index.css" type="text/css">
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+            crossorigin="anonymous"
+        />
+    <link rel="stylesheet" href="/static/styles/index.css" type="text/css">
     <link rel="shortcut icon" href="/static/imgs/purdue.png" type="image/jpg">
     <title> Purdue 2K22 Tool</title>
+
+    <script>
+      $.get("static/header.html", function(data) {
+        $("#header").replaceWith(data);
+      });
+      </script>
+    
+    <script>
+      // call randomizeTeams script when page is loaded
+      $(document).ready(function() {
+        randomizeTeams();
+      });
+    </script>
+    
   </head>
+
   <body>
-    <!-- bootstrap navigation ribbon -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/">
-        <img src="/static/imgs/purdue.png" alt="Purdue Logo" width="50" height="50">
-      </a>
-      
-      <a class="navbar-brand" href="#">Purdue 2K22 Tool</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-          </li>
-
-          <li class="nav-item">
-            <a class="nav-link" href="/user-records">User Records</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/player-records">Player Records</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/about">About</a>
-          </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-      </div>
-    </nav>
+    <!-- import my navigation bar from nav.html -->
+    <div id="header"></div>
 
     <!-- Randomizer specific code -->
-    <br>
+    <div class="alert alert-warning fade show text-center" role="alert" id="fewPlayersAlert" style="display:none">
+      <strong>Error! </strong>Too few players. Please include guards and/or forwards.
+    </div>
+    
     <script>
       function randomizeTeams() {
-        // fetch json from /randomize url
-        fetch('/randomize')
+        // get values of check boxes
+        var guardsBool = document.getElementById("guardsBool").checked;
+        var forwardsBool = document.getElementById("forwardsBool").checked;
+        var centersBool = document.getElementById("centersBool").checked;
+
+        if(!guardsBool && !forwardsBool) {
+          $("#fewPlayersAlert").show();
+          return;
+        }
+        $("#fewPlayersAlert").hide();
+      
+        // fetch json from /randomize url, send bools
+        fetch("/randomize", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            "guardsBool": guardsBool,
+            "forwardsBool": forwardsBool,
+            "centersBool": centersBool
+          })
+        })
           .then(response => response.json())
           .then(data => {
             // update the select menus with the new data
@@ -74,108 +94,136 @@
     </script>
 
     <script>
+      function uploadModal() {
+        $("#uploadModal").modal("show");
+      };
+    </script>
+
+    <script>
       function uploadScores() {
-        var confirmBool = confirm("Upload to database?");
+        // get team1_score and team2_score values
+        var team1_score = document.getElementById("team1_score").value
+        var team2_score = document.getElementById("team2_score").value
+        
+        // get user and players
+        var Table = document.getElementById("user-player-table")
+        var team1_user1 = Table.rows[1].cells[1].innerHTML
+        var team1_player1 = Table.rows[1].cells[2].innerHTML
+        var team1_user2 = Table.rows[2].cells[0].innerHTML
+        var team1_player2 = Table.rows[2].cells[1].innerHTML
+        var team2_user1 = Table.rows[3].cells[1].innerHTML
+        var team2_player1 = Table.rows[3].cells[2].innerHTML
+        var team2_user2 = Table.rows[4].cells[0].innerHTML
+        var team2_player2 = Table.rows[4].cells[1].innerHTML
 
-          if(confirmBool) {
-          // get team1_score and team2_score values
-          var team1_score = document.getElementById("team1_score").value
-          var team2_score = document.getElementById("team2_score").value
-          
-          // get user and players
-          var Table = document.getElementById("user-player-table")
-          var team1_user1 = Table.rows[1].cells[1].innerHTML
-          var team1_player1 = Table.rows[1].cells[2].innerHTML
-          var team1_user2 = Table.rows[2].cells[1].innerHTML
-          var team1_player2 = Table.rows[2].cells[2].innerHTML
-          var team2_user1 = Table.rows[3].cells[1].innerHTML
-          var team2_player1 = Table.rows[3].cells[2].innerHTML
-          var team2_user2 = Table.rows[4].cells[1].innerHTML
-          var team2_player2 = Table.rows[4].cells[2].innerHTML
-
-          // create a json object with the data
-          var data = {
-            team1_score: team1_score,
-            team2_score: team2_score,
-            team1_user1: team1_user1,
-            team1_user2: team1_user2,
-            team1_player1: team1_player1,
-            team1_player2: team1_player2,
-            team2_user1: team2_user1,
-            team2_user2: team2_user2,
-            team2_player1: team2_player1,
-            team2_player2: team2_player2
-          };
-          
-          // fetch with post method to /upload url
-          fetch('/upload', {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-          });
-          // clear the input fields
-          document.getElementById("team1_score").value = "";
-          document.getElementById("team2_score").value = "";
-          }
+        // create a json object with the data
+        var data = {
+          team1_score: team1_score,
+          team2_score: team2_score,
+          team1_user1: team1_user1,
+          team1_user2: team1_user2,
+          team1_player1: team1_player1,
+          team1_player2: team1_player2,
+          team2_user1: team2_user1,
+          team2_user2: team2_user2,
+          team2_player1: team2_player1,
+          team2_player2: team2_player2
+        };
+        
+        // fetch with post method to /upload url
+        fetch('/upload', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(data)
+        });
+        // clear the input fields
+        document.getElementById("team1_score").value = "";
+        document.getElementById("team2_score").value = "";
+        $("#uploadModal").modal('hide');
       }
     </script>
 
-    <div class="container">
+    <div class="container-sm">
       <div class="row justify-content-center" style="margin-bottom: 20px">
         <div class="col-auto">
           <button type="button" class="btn btn-primary" onclick="randomizeTeams()">Randomize Teams</button>
         </div>
       </div>
 
-      <div class="row">
-        <div class="col">
-        <table class="table" id="user-player-table">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">User</th>
-              <th scope="col">Player</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ringers_logo.png"/></td>
-              <td id="team1_user1">&nbsp</td>
-              <td id="team1_player1">&nbsp</td>
-              <td id=team1_player1_pic>&nbsp</td>
-            </tr>
-            <tr>
-              
-              <td id="team1_user2">&nbsp</td>
-              <td id="team1_player2">&nbsp</td>
-              <td id=team1_player2_pic>&nbsp</td>
-            </tr>
-            <tr>
-              <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ballerz_logo.png"/></td>
-              <td id="team2_user1">&nbsp</td>
-              <td id="team2_player1">&nbsp</td>
-              <td id=team2_player1_pic>&nbsp</td>
-            </tr>
-            <tr>
-              
-              <td id="team2_user2">&nbsp</td>
-              <td id="team2_player2">&nbsp</td>
-              <td id=team2_player2_pic>&nbsp</td>
-          </tbody>
-        </table>
+      <div class="row justify-content-center">
+
+        <!-- 3 bootstrap checkboxes in the same row -->
+        <div class="col-auto">
+
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="guardsBool" value="guardsBool" checked/>
+            <label class="form-check-label" for="inlineCheckbox1">Guards</label>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="forwardsBool" value="forwardsBool" checked/>
+            <label class="form-check-label" for="inlineCheckbox2">Forwards</label>
+          </div>
+        </div>
+
+        <div class="col-auto">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="centersBool" value="centersBool" checked/>
+            <label class="form-check-label" for="inlineCheckbox3">Centers</label>
+          </div>
+        </div>
       </div>
+
+      <div class="row justify-content-center">
+        <div class="col-auto">
+          <table class="table table-responsive" id="user-player-table">
+            <thead>
+              <tr>
+                <th scope="col"></th>
+                <th scope="col">User</th>
+                <th scope="col">Player</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ringers_logo.png"/></td>
+                <td id="team1_user1">&nbsp</td>
+                <td id="team1_player1">&nbsp</td>
+                <td id=team1_player1_pic>&nbsp</td>
+              </tr>
+              <tr>
+                
+                <td id="team1_user2">&nbsp</td>
+                <td id="team1_player2">&nbsp</td>
+                <td id=team1_player2_pic>&nbsp</td>
+              </tr>
+              <tr>
+                <td rowspan="2" style="text-align:center"><img width="100%" class="team-img" src="/static/imgs/ballerz_logo.png"/></td>
+                <td id="team2_user1">&nbsp</td>
+                <td id="team2_player1">&nbsp</td>
+                <td id=team2_player1_pic>&nbsp</td>
+              </tr>
+              <tr>
+                
+                <td id="team2_user2">&nbsp</td>
+                <td id="team2_player2">&nbsp</td>
+                <td id=team2_player2_pic>&nbsp</td>
+            </tbody>
+          </table>
+        </div>
       </div>
   
-      <!-- bootstrap text input for scores -->
       <div class="row justify-content-center">
-        <div class="col-auto-padded">
+        <div class="col-auto">
           <input type="text" class="form-control" id="team1_score" placeholder="Ringers Score">
         </div>
 
-        <div class="col-auto-padded">
+        <div class="col-auto">
           <input type="text" class="form-control" id="team2_score" placeholder="Ballerz Score">
         </div>
 
@@ -183,23 +231,35 @@
 
       <div class="row justify-content-center">
         <div class="col-auto">
-          <button type="button" class="btn btn-primary" onclick="uploadScores()">Upload to Database</button>
+          <button type="button" class="btn btn-large btn-primary" onclick="uploadModal()">Upload to Database</button>
         </div>
-        <div class="column">
-        <br>
+
+      </div>
+    </div>
+    <!-- modal popup to confirm upload -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="uploadModalLabel">Confirm Upload</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Are you sure you want to upload this game to the database?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" onclick="uploadScores()">Upload</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- bootstrap basic footer -->
-    <!-- Bootstrap footer at the bottom of the page -->
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"
+    ></script>
+    
   </body>
 </html>

@@ -40,24 +40,34 @@ def getUsers(usersParam):
 
     return team1_users, team2_users,
 
-def getPlayers():
-    selected_players = random.sample(guards + forwards + centers, 4)
+def getPlayers(guardsBool, forwardsBool, centersBool):
+
+    playerPool = []
+    playerPool += guards if guardsBool else []
+    playerPool += forwards if forwardsBool else []
+    playerPool += centers if centersBool else []
+
+    selected_players = random.sample(playerPool, 4)
+    
     team1_players = selected_players[:2]
     team2_players = selected_players[2:]
 
     return team1_players, team2_players
 
-def getRandTeams(users):
+def getRandTeams(users, guardsBool, forwardsBool, centersBool):
     team1_users, team2_users, = getUsers(users)
-    team1_players, team2_players = getPlayers()
+    team1_players, team2_players = getPlayers(guardsBool, forwardsBool, centersBool)
 
     team1 = {user : player for user, player in zip(team1_users, team1_players)}
     team2 = {user : player for user, player in zip(team2_users, team2_players)}
 
     return team1, team2, users
 
-def htmlRandomize():
-    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"])[:2]
+def htmlRandomize(json_data):
+    guardsBool = json_data['guardsBool']
+    forwardsBool = json_data['forwardsBool']
+    centersBool = json_data['centersBool']
+    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"], guardsBool, forwardsBool, centersBool)[:2]
 
     json_data = {"team1_user1" : list(team1.keys())[0],
                 "team1_user2" : list(team1.keys())[1],
@@ -68,7 +78,6 @@ def htmlRandomize():
                 "team2_player1" : team2[list(team2.keys())[0]],
                 "team2_player2" : team2[list(team2.keys())[1]]}
 
-    print(json_data)
     return json_data
 
 def htmlUploadScores(json_data):
