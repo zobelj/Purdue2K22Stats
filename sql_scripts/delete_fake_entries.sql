@@ -1,1 +1,1 @@
-delete from user_gamelogs where PF = 50 and PA = 50;
+delete from user_gamelogs where is_test = 1;
