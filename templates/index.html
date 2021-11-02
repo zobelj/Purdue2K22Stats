@@ -61,15 +61,14 @@
         var sasha_stefanovic = $('#sasha_stefanovic').is(':checked');
 
         // count number of players checked
-        var numPlayers = 0;
-
-
-        if(!guardsBool && !forwardsBool) {
+        var numPlayers = mason_gillis + brian_wadell + eric_hunter_jr + caleb_furst + trey_kaufman_renn + brandon_newman + isaiah_thompson + zack_edey + jaden_ivey + ethan_morton + trevion_williams + sasha_stefanovic;
+        
+        if(numPlayers < 4) {
           $("#fewPlayersAlert").show();
           return;
         }
         $("#fewPlayersAlert").hide();
-      
+
         // fetch json from /randomize url, send bools
         fetch("/randomize", {
           method: "POST",
