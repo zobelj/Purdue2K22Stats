@@ -44,6 +44,10 @@
       <strong>Error! </strong>Too few players. Please include guards and/or forwards.
     </div>
     
+    <div class="alert alert-warning fade show text-center" role="alert" id="fewUsersAlert" style="display:none">
+      <strong>Error! </strong>Too few users. Please include at least 4 users.
+    </div>
+
     <script>
       function randomizeTeams() {
         // get values of player checkboxes
@@ -63,11 +67,27 @@
         // count number of players checked
         var numPlayers = mason_gillis + brian_wadell + eric_hunter_jr + caleb_furst + trey_kaufman_renn + brandon_newman + isaiah_thompson + zack_edey + jaden_ivey + ethan_morton + trevion_williams + sasha_stefanovic;
         
+        // get values of user checkboxes
+        var brant_user = $('#brant_user').is(':checked');
+        var jeremy_user = $('#jeremy_user').is(':checked');
+        var joe_user = $('#joe_user').is(':checked');
+        var nick_user = $('#nick_user').is(':checked');
+        var jake_user = $('#jake_user').is(':checked');
+        var lucas_user = $('#lucas_user').is(':checked');
+
+        var numUsers = brant_user + jeremy_user + joe_user + nick_user + jake_user + lucas_user;
+
         if(numPlayers < 4) {
           $("#fewPlayersAlert").show();
           return;
         }
         $("#fewPlayersAlert").hide();
+
+        if(numUsers < 4) {
+          $("#fewUsersAlert").show();
+          return;
+        }
+        $("#fewUsersAlert").hide();
 
         // fetch json from /randomize url, send bools
         fetch("/randomize", {
@@ -87,7 +107,13 @@
             "jaden_ivey": jaden_ivey,
             "ethan_morton": ethan_morton,
             "trevion_williams": trevion_williams,
-            "sasha_stefanovic": sasha_stefanovic
+            "sasha_stefanovic": sasha_stefanovic,
+            "brant_user": brant_user,
+            "jeremy_user": jeremy_user,
+            "joe_user": joe_user,
+            "nick_user": nick_user,
+            "jake_user": jake_user,
+            "lucas_user": lucas_user
           })
         })
           .then(response => response.json())
@@ -329,99 +355,102 @@
               <button type="button" class="btn btn-large btn-primary" onclick="deleteTestUploadsModal()">Delete Test Uploads</button>
             </div>
           </div>
-        </div>
         
-        <div class="col-auto">
-          <h3>Player Selection</h3>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="mason_gillis" value="mason_gillis" checked/>
-            <label class="form-check-label" for="inlineCheckbox1">Mason Gillis</label>
-          </div>
+        
+          <div class="row justify-content-center">
+            <div class="col-auto">
+              <h3>Player Selection</h3>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="mason_gillis" value="mason_gillis" checked/>
+                <label class="form-check-label" for="inlineCheckbox1">Mason Gillis</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="brian_wadell" value="brian_wadell" checked/>
-            <label class="form-check-label" for="inlineCheckbox2">Brian Wadell</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="brian_wadell" value="brian_wadell" checked/>
+                <label class="form-check-label" for="inlineCheckbox2">Brian Wadell</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="eric_hunter_jr" value="eric_hunter_jr" checked/>
-            <label class="form-check-label" for="inlineCheckbox3">Eric Hunter Jr.</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="eric_hunter_jr" value="eric_hunter_jr" checked/>
+                <label class="form-check-label" for="inlineCheckbox3">Eric Hunter Jr.</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="caleb_furst" value="caleb_furst" checked/>
-            <label class="form-check-label" for="inlineCheckbox4">Caleb Furst</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="caleb_furst" value="caleb_furst" checked/>
+                <label class="form-check-label" for="inlineCheckbox4">Caleb Furst</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="trey_kaufman_renn" value="trey_kaufman_renn" checked/>
-            <label class="form-check-label" for="inlineCheckbox5">Trey Kaufman-Renn</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="trey_kaufman_renn" value="trey_kaufman_renn" checked/>
+                <label class="form-check-label" for="inlineCheckbox5">Trey Kaufman-Renn</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="brandon_newman" value="brandon_newman" checked/>
-            <label class="form-check-label" for="inlineCheckbox6">Brandon Newman</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="brandon_newman" value="brandon_newman" checked/>
+                <label class="form-check-label" for="inlineCheckbox6">Brandon Newman</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="isaiah_thompson" value="isaiah_thompson" checked/>
-            <label class="form-check-label" for="inlineCheckbox7">Isaiah Thompson</label>
-          </div>
-          
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="zach_edey" value="zach_edey" checked/>
-            <label class="form-check-label" for="inlineCheckbox8">Zach Edey</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="isaiah_thompson" value="isaiah_thompson" checked/>
+                <label class="form-check-label" for="inlineCheckbox7">Isaiah Thompson</label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="zach_edey" value="zach_edey" checked/>
+                <label class="form-check-label" for="inlineCheckbox8">Zach Edey</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="jaden_ivey" value="jaden_ivey" checked/>
-            <label class="form-check-label" for="inlineCheckbox9">Jaden Ivey</label>
-          </div>
-          
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="ethan_morton" value="ethan_morton" checked/>
-            <label class="form-check-label" for="inlineCheckbox10">Ethan Morton</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="jaden_ivey" value="jaden_ivey" checked/>
+                <label class="form-check-label" for="inlineCheckbox9">Jaden Ivey</label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="ethan_morton" value="ethan_morton" checked/>
+                <label class="form-check-label" for="inlineCheckbox10">Ethan Morton</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="trevion_williams" value="trevion_williams" checked/>
-            <label class="form-check-label" for="inlineCheckbox11">Trevion Williams</label>
-          </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="trevion_williams" value="trevion_williams" checked/>
+                <label class="form-check-label" for="inlineCheckbox11">Trevion Williams</label>
+              </div>
 
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="sasha_stefanovic" value="sasha_stefanovic" checked/>
-            <label class="form-check-label" for="inlineCheckbox12">Sasha Stefanovic</label>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="sasha_stefanovic" value="sasha_stefanovic" checked/>
+                <label class="form-check-label" for="inlineCheckbox12">Sasha Stefanovic</label>
+              </div>
+            </div>
+            <div class="col-auto">
+              <h3>User Selection</h3>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="brant_user" value="brant_user" checked/>
+                <label class="form-check-label" for="inlineCheckbox13">Brant</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="jeremy_user" value="jeremy_user" checked/>
+                <label class="form-check-label" for="inlineCheckbox14">Jeremy</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="joe_user" value="joe_user" checked/>
+                <label class="form-check-label" for="inlineCheckbox15">Joe</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="nick_user" value="nick_user" checked/>
+                <label class="form-check-label" for="inlineCheckbox16">Nick</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="jake_user" value="jake_user"/>
+                <label class="form-check-label" for="inlineCheckbox17">Jake</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="lucas_user" value="lucas_user"/>
+                <label class="form-check-label" for="inlineCheckbox18">Lucas</label>
+              </div>
+            </div>
+            
           </div>
+        </div>
       </div>
-
-      <div class="col-auto">
-        <h3>User Selection</h3>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="brant_user" value="brant_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox13">Brant</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="jeremy_user" value="jeremy_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox14">Jeremy</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="joe_user" value="joe_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox15">Joe</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="nick_user" value="nick_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox16">Nick</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="jake_user" value="jake_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox17">Jake</label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" id="lucas_user" value="lucas_user" checked/>
-          <label class="form-check-label" for="inlineCheckbox18">Lucas</label>
-        </div>
-      </div>
-
     </div>
     <!-- modal popup to confirm upload -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">

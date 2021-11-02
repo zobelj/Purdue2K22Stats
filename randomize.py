@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
 allPlayers = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)] 
+allUsers = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
 
 guards = [("Eric Hunter Jr.", 2), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Sasha Stefanovic", 55)]
 forwards = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4)]
@@ -64,10 +65,15 @@ def getRandTeams(users, players):
     return team1, team2, users
 
 def htmlRandomize(json_data):
-    playerBools = list(json_data.values())
-    players = list(filter(None, [playerBool * player for player, playerBool in zip(allPlayers, playerBools)]))
+    # get json data
+    playerBools = list(json_data.values())[:12]
+    userBools = list(json_data.values())[12:]
 
-    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"], players)[:2]
+    # multiply json true/false by all players/users, remove empties
+    players = list(filter(None, [playerBool * player for player, playerBool in zip(allPlayers, playerBools)]))
+    users = list(filter(None, [userBool * user for user, userBool in zip(allUsers, userBools)]))
+
+    team1, team2 = getRandTeams(users, players, )[:2]
 
     json_data = {"team1_user1" : list(team1.keys())[0],
                 "team1_user2" : list(team1.keys())[1],
