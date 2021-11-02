@@ -5,7 +5,7 @@ order by W desc;
 
 
 #User combinations
-select sum(u1.PF > u1.PA) as W, sum(u1.PF < u1.PA) as L from user_gamelogs u1
+select u1.UserID, u2.UserID, sum(u1.PF > u1.PA) as W, sum(u1.PF < u1.PA) as L from user_gamelogs u1
 join user_gamelogs u2 on u1.GameID = u2.GameID and u1.TeamID = u2.TeamID and u1.UserID != u2.UserID
 where u1.UserID < u2.UserID
 group by u1.UserID, u2.UserID
