@@ -4,7 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
 allPlayers = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)] 
-allUsers = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
+allUsers = ["Brant", "Jeremy", "Joe", "Nick", "JAke", "Lucas"]
 
 guards = [("Eric Hunter Jr.", 2), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Sasha Stefanovic", 55)]
 forwards = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4)]
@@ -13,7 +13,7 @@ centers = [("Zach Edey", 15), ("Trevion Williams", 50)]
 def getSettings():
     print("Choose user set: ")
     print("1. Roommates\n[Brant, Jeremy, Joe, Nick]")
-    print("2. Complete database\n[Brant, Jeremy, Joe, Nick, Jake, Lucas]")
+    print("2. Complete database\n[Brant, Jeremy, Joe, Nick, JAke, Lucas]")
     print("3. Custom database\nEnter names separated by space")
     userSet = input("> ")
 
@@ -23,7 +23,7 @@ def getSettings():
             users = ["Brant", "Jeremy", "Joe", "Nick"]
             validInput = True
         elif(userSet == "2"):
-            users = ["Brant", "Jeremy", "Joe", "Nick", "Jake", "Lucas"]
+            users = ["Brant", "Jeremy", "Joe", "Nick", "JAke", "Lucas"]
             validInput = True
         elif(userSet == "3"):
             users = input("> ").split()
