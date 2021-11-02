@@ -44,6 +44,20 @@ def player_records():
         
     return render_template('player-records.html', data=data)
 
+@app.route('/player-user-records')
+def player_user_records():
+    with open('db_url.txt', 'r') as f:
+        db_url = f.read()
+    my_conn = create_engine(db_url)
+    
+    with my_conn.connect() as conn:
+        file = open("./sql_scripts/player_user_records.sql")
+        query = text(file.read())
+        rows = conn.execute(query)
+        data = rows.fetchall()
+        
+    return render_template('player-user-records.html', data=data)
+
 @app.route('/about')
 def about():
     return render_template('about.html')
