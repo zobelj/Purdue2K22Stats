@@ -58,14 +58,14 @@
         var trey_kaufman_renn = $('#trey_kaufman_renn').is(':checked');
         var brandon_newman = $('#brandon_newman').is(':checked');
         var isaiah_thompson = $('#isaiah_thompson').is(':checked');
-        var zack_edey = $('#zack_edey').is(':checked');
+        var zach_edey = $('#zach_edey').is(':checked');
         var jaden_ivey = $('#jaden_ivey').is(':checked');
         var ethan_morton = $('#ethan_morton').is(':checked');
         var trevion_williams = $('#trevion_williams').is(':checked');
         var sasha_stefanovic = $('#sasha_stefanovic').is(':checked');
 
         // count number of players checked
-        var numPlayers = mason_gillis + brian_wadell + eric_hunter_jr + caleb_furst + trey_kaufman_renn + brandon_newman + isaiah_thompson + zack_edey + jaden_ivey + ethan_morton + trevion_williams + sasha_stefanovic;
+        var numPlayers = mason_gillis + brian_wadell + eric_hunter_jr + caleb_furst + trey_kaufman_renn + brandon_newman + isaiah_thompson + zach_edey + jaden_ivey + ethan_morton + trevion_williams + sasha_stefanovic;
         
         // get values of user checkboxes
         var brant_user = $('#brant_user').is(':checked');
@@ -76,17 +76,24 @@
         var lucas_user = $('#lucas_user').is(':checked');
 
         var numUsers = brant_user + jeremy_user + joe_user + nick_user + jake_user + lucas_user;
-
-        if(numPlayers < 4) {
-          $("#fewPlayersAlert").show();
+      
+        if(numPlayers < 4 || numUsers < 4) {
+          if(numPlayers < 4) {
+            $('#fewPlayersAlert').show();
+          }
+          else {
+            $('#fewPlayersAlert').hide();
+          }
+          if(numUsers < 4) {
+            $('#fewUsersAlert').show();
+          }
+          else {
+            $('#fewUsersAlert').hide();
+          }
           return;
         }
+        
         $("#fewPlayersAlert").hide();
-
-        if(numUsers < 4) {
-          $("#fewUsersAlert").show();
-          return;
-        }
         $("#fewUsersAlert").hide();
 
         // fetch json from /randomize url, send bools
@@ -103,7 +110,7 @@
             "trey_kaufman_renn": trey_kaufman_renn,
             "brandon_newman": brandon_newman,
             "isaiah_thompson": isaiah_thompson,
-            "zack_edey": zack_edey,
+            "zach_edey": zach_edey,
             "jaden_ivey": jaden_ivey,
             "ethan_morton": ethan_morton,
             "trevion_williams": trevion_williams,
@@ -337,11 +344,11 @@
           </div>
       
           <div class="row justify-content-center">
-            <div class="col-auto">
+            <div class="col-auto input-box-padded">
               <input type="text" class="form-control" id="team1_score" placeholder="Ringers Score">
             </div>
 
-            <div class="col-auto">
+            <div class="col-auto input-box-padded">
               <input type="text" class="form-control" id="team2_score" placeholder="Ballerz Score">
             </div>
 
@@ -445,6 +452,11 @@
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="lucas_user" value="lucas_user"/>
                 <label class="form-check-label" for="inlineCheckbox18">Lucas</label>
+              </div>
+
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="jaden_ivey_user" value="jaden_ivey_user" disabled/>
+                <label class="form-check-label" for="inlineCheckbox19">Jaden Ivey</label>
               </div>
             </div>
             
