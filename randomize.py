@@ -3,7 +3,7 @@ from updateSQL import update_sql
 from sqlalchemy import create_engine
 from sqlalchemy.sql import text
 
-
+allPlayers = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Eric Hunter Jr.", 2), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Zach Edey", 15), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Trevion Williams", 50), ("Sasha Stefanovic", 55)] 
 
 guards = [("Eric Hunter Jr.", 2), ("Brandon Newman", 5), ("Isaiah Thompson", 11), ("Jaden Ivey", 23), ("Ethan Morton", 25), ("Sasha Stefanovic", 55)]
 forwards = [("Mason Gillis", 0), ("Brian Wadell", 1), ("Caleb Furst", 3), ("Trey Kaufman-Renn", 4)]
@@ -44,23 +44,19 @@ def getUsers(usersParam):
 
     return team1_users, team2_users,
 
-def getPlayers(guardsBool, forwardsBool, centersBool):
+def getPlayers(players):
+    selected_players = random.sample(players, 4)
+    print("!!!!!!")
+    print(selected_players)
 
-    playerPool = []
-    playerPool += guards if guardsBool else []
-    playerPool += forwards if forwardsBool else []
-    playerPool += centers if centersBool else []
-
-    selected_players = random.sample(playerPool, 4)
-    
     team1_players = selected_players[:2]
     team2_players = selected_players[2:]
 
     return team1_players, team2_players
 
-def getRandTeams(users, guardsBool, forwardsBool, centersBool):
+def getRandTeams(users, players):
     team1_users, team2_users, = getUsers(users)
-    team1_players, team2_players = getPlayers(guardsBool, forwardsBool, centersBool)
+    team1_players, team2_players = getPlayers(players)
 
     team1 = {user : player for user, player in zip(team1_users, team1_players)}
     team2 = {user : player for user, player in zip(team2_users, team2_players)}
@@ -68,10 +64,10 @@ def getRandTeams(users, guardsBool, forwardsBool, centersBool):
     return team1, team2, users
 
 def htmlRandomize(json_data):
-    guardsBool = json_data['guardsBool']
-    forwardsBool = json_data['forwardsBool']
-    centersBool = json_data['centersBool']
-    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"], guardsBool, forwardsBool, centersBool)[:2]
+    playerBools = list(json_data.values())
+    players = list(filter(None, [playerBool * player for player, playerBool in zip(allPlayers, playerBools)]))
+
+    team1, team2 = getRandTeams(["Joe", "Brant", "Jeremy", "Nick"], players)[:2]
 
     json_data = {"team1_user1" : list(team1.keys())[0],
                 "team1_user2" : list(team1.keys())[1],

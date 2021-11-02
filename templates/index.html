@@ -46,10 +46,23 @@
     
     <script>
       function randomizeTeams() {
-        // get values of check boxes
-        var guardsBool = document.getElementById("guardsBool").checked;
-        var forwardsBool = document.getElementById("forwardsBool").checked;
-        var centersBool = document.getElementById("centersBool").checked;
+        // get values of player checkboxes
+        var mason_gillis = $('#mason_gillis').is(':checked');
+        var brian_wadell = $('#brian_wadell').is(':checked');
+        var eric_hunter_jr = $('#eric_hunter_jr').is(':checked');
+        var caleb_furst = $('#caleb_furst').is(':checked');
+        var trey_kaufman_renn = $('#trey_kaufman_renn').is(':checked');
+        var brandon_newman = $('#brandon_newman').is(':checked');
+        var isaiah_thompson = $('#isaiah_thompson').is(':checked');
+        var zack_edey = $('#zack_edey').is(':checked');
+        var jaden_ivey = $('#jaden_ivey').is(':checked');
+        var ethan_morton = $('#ethan_morton').is(':checked');
+        var trevion_williams = $('#trevion_williams').is(':checked');
+        var sasha_stefanovic = $('#sasha_stefanovic').is(':checked');
+
+        // count number of players checked
+        var numPlayers = 0;
+
 
         if(!guardsBool && !forwardsBool) {
           $("#fewPlayersAlert").show();
@@ -64,15 +77,24 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            "guardsBool": guardsBool,
-            "forwardsBool": forwardsBool,
-            "centersBool": centersBool
+            "mason_gillis": mason_gillis,
+            "brian_wadell": brian_wadell,
+            "eric_hunter_jr": eric_hunter_jr,
+            "caleb_furst": caleb_furst,
+            "trey_kaufman_renn": trey_kaufman_renn,
+            "brandon_newman": brandon_newman,
+            "isaiah_thompson": isaiah_thompson,
+            "zack_edey": zack_edey,
+            "jaden_ivey": jaden_ivey,
+            "ethan_morton": ethan_morton,
+            "trevion_williams": trevion_williams,
+            "sasha_stefanovic": sasha_stefanovic
           })
         })
           .then(response => response.json())
           .then(data => {
             // update the select menus with the new data
-            document.getElementById("team1_user1").innerHTML = data.team1_user1
+            document.getElementById("team1_user1").innerHTML = data.team1_user1;
             document.getElementById("team1_player1").innerHTML = data.team1_player1[0] + ", #" + data.team1_player1[1];
 
             // replace period in string with space
@@ -101,6 +123,64 @@
     <script>
       function deleteTestUploadsModal() {
         $("#deleteTestUploadsModal").modal("show");
+      };
+    </script>
+
+    <script>
+      function guardsToggle() {
+        // get value of guards checkbox
+        var guardsBool = document.getElementById("guardsBool").checked;
+
+        if(guardsBool) {
+          // set guards checboxes to true
+          document.getElementById("eric_hunter_jr").checked = true;
+          document.getElementById("brandon_newman").checked = true;
+          document.getElementById("isaiah_thompson").checked = true;
+          document.getElementById("jaden_ivey").checked = true;
+          document.getElementById("ethan_morton").checked = true;
+          document.getElementById("sasha_stefanovic").checked = true;
+          return;
+        }
+        document.getElementById("eric_hunter_jr").checked = false;
+        document.getElementById("brandon_newman").checked = false;
+        document.getElementById("isaiah_thompson").checked = false;
+        document.getElementById("jaden_ivey").checked = false;
+        document.getElementById("ethan_morton").checked = false;
+        document.getElementById("sasha_stefanovic").checked = false;
+
+      };
+    </script>
+
+    <script>
+      function forwardsToggle() {
+        // get value of forwards checkbox
+        var forwardsBool = document.getElementById("forwardsBool").checked;
+
+        if(forwardsBool) {
+          document.getElementById("mason_gillis").checked = true;
+          document.getElementById("brian_wadell").checked = true;
+          document.getElementById("caleb_furst").checked = true;
+          document.getElementById("trey_kaufman_renn").checked = true;
+          return;
+        }
+        document.getElementById("mason_gillis").checked = false;
+        document.getElementById("brian_wadell").checked = false;
+        document.getElementById("caleb_furst").checked = false;
+        document.getElementById("trey_kaufman_renn").checked = false;
+      };
+    </script>
+
+    <script>
+      function centersToggle() {
+        var centersBool = document.getElementById("centersBool").checked;
+
+        if(centersBool) {
+          document.getElementById("zach_edey").checked = true;
+          document.getElementById("trevion_williams").checked = true;
+          return;
+        }
+        document.getElementById("zach_edey").checked = false;
+        document.getElementById("trevion_williams").checked = false;
       };
     </script>
 
@@ -147,32 +227,18 @@
         document.getElementById("team1_score").value = "";
         document.getElementById("team2_score").value = "";
         $("#uploadModal").modal('hide');
-      }
+      };
     </script>
 
     <script>
       function deleteTestUploads() {
         fetch('/deleteTestUploads');
         $("#deleteTestUploadsModal").modal('hide');
-      }
+      };
     </script>
-    <!-- players: 
-      Mason Gillis
-      Brian Wadell
-      Eric Hunter Jr.
-      Caleb Furst
-      Trey Kaufman-Renn
-      Brandon Newman
-      Isaiah Thompson
-      Zach Edey
-      Jaden Ivey
-      Ethan Morton
-      Trevion Williams
-      Sasha Stefanovic
-    -->
-          <!-- 12 checkboxes, one for each player -->
+
     <div class="container-sm">
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col-auto">
           <div class="row justify-content-center" style="margin-bottom: 20px">
             <div class="col-auto">
@@ -185,45 +251,22 @@
           <div class="row justify-content-center">
             <div class="col-auto">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="guardsBool" value="guardsBool" checked/>
+                <input class="form-check-input" type="checkbox" onChange="guardsToggle()" id="guardsBool" value="guardsBool" checked/>
                 <label class="form-check-label" for="inlineCheckbox1">Guards</label>
               </div>
             </div>
 
             <div class="col-auto">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="forwardsBool" value="forwardsBool" checked/>
+                <input class="form-check-input" type="checkbox" onChange="forwardsToggle()" id="forwardsBool" value="forwardsBool" checked/>
                 <label class="form-check-label" for="inlineCheckbox2">Forwards</label>
               </div>
             </div>
 
             <div class="col-auto">
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" id="centersBool" value="centersBool" checked/>
+                <input class="form-check-input" type="checkbox" onChange="centersToggle()" id="centersBool" value="centersBool" checked/>
                 <label class="form-check-label" for="inlineCheckbox3">Centers</label>
-              </div>
-            </div>
-          </div>
-
-          <div class="row justify-content-center">
-            <!-- dropdown list of checkboxes -->
-            <div class="col-auto">
-              <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Users
-                </button>
-
-                <div class="dropdown-menu">
-                  <button class="dropdown-item" type="button">
-                    <input type="checkbox">Action
-                  </button>
-                  <button class="dropdown-item" type="button">
-                    <input type="checkbox">Action
-                  </button>
-                  <button class="dropdown-item" type="button">
-                    <input type="checkbox">Action
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -289,13 +332,87 @@
           </div>
         </div>
         
-        <!--- Column next to main panel can go here
         <div class="col-auto">
-          test
-        </div>
-        -->
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="mason_gillis" value="mason_gillis" checked/>
+            <label class="form-check-label" for="inlineCheckbox1">Mason Gillis</label>
+          </div>
 
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="brian_wadell" value="brian_wadell" checked/>
+            <label class="form-check-label" for="inlineCheckbox2">Brian Wadell</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="eric_hunter_jr" value="eric_hunter_jr" checked/>
+            <label class="form-check-label" for="inlineCheckbox3">Eric Hunter Jr.</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="caleb_furst" value="caleb_furst" checked/>
+            <label class="form-check-label" for="inlineCheckbox4">Caleb Furst</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="trey_kaufman_renn" value="trey_kaufman_renn" checked/>
+            <label class="form-check-label" for="inlineCheckbox5">Trey Kaufman-Renn</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="brandon_newman" value="brandon_newman" checked/>
+            <label class="form-check-label" for="inlineCheckbox6">Brandon Newman</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="isaiah_thompson" value="isaiah_thompson" checked/>
+            <label class="form-check-label" for="inlineCheckbox7">Isaiah Thompson</label>
+          </div>
+          
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="zach_edey" value="zach_edey" checked/>
+            <label class="form-check-label" for="inlineCheckbox8">Zach Edey</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="jaden_ivey" value="jaden_ivey" checked/>
+            <label class="form-check-label" for="inlineCheckbox9">Jaden Ivey</label>
+          </div>
+          
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="ethan_morton" value="ethan_morton" checked/>
+            <label class="form-check-label" for="inlineCheckbox10">Ethan Morton</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="trevion_williams" value="trevion_williams" checked/>
+            <label class="form-check-label" for="inlineCheckbox11">Trevion Williams</label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="sasha_stefanovic" value="sasha_stefanovic" checked/>
+            <label class="form-check-label" for="inlineCheckbox12">Sasha Stefanovic</label>
+          </div>
       </div>
+
+      <div class="col-auto">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="brant_user" value="brant_user" checked/>
+          <label class="form-check-label" for="inlineCheckbox13">Brant</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="jeremy_user" value="jeremy_user" checked/>
+          <label class="form-check-label" for="inlineCheckbox14">Jeremy</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="joe_user" value="joe_user" checked/>
+          <label class="form-check-label" for="inlineCheckbox15">Joe</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="nick_user" value="nick_user" checked/>
+          <label class="form-check-label" for="inlineCheckbox16">Nick</label>
+        </div>
+      </div>
+
     </div>
     <!-- modal popup to confirm upload -->
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
